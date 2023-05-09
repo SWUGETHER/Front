@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as Google from "expo-auth-session/providers/google";
-import { StyleSheet, Button } from "react-native";
+import { StyleSheet, Pressable, View, Text, Image } from "react-native";
+import googleNormal from "../assets/google_oauth_normal.png";
+import * as Font from "expo-font";
 import {
   GOOGLE_OAUTH_CLIENT_ID_EXPO,
   GOOGLE_OAUTH_CLIENT_ID_ANDROID,
@@ -8,12 +10,13 @@ import {
 } from "react-native-dotenv";
 
 const Login = () => {
-  console.log("dd");
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId: GOOGLE_OAUTH_CLIENT_ID_EXPO,
     androidClientId: GOOGLE_OAUTH_CLIENT_ID_ANDROID,
     webClientId: GOOGLE_OAUTH_CLIENT_ID_WEB,
+    responseType: "id_token",
   });
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     if (response?.type === "success") {
@@ -22,24 +25,60 @@ const Login = () => {
     }
   }, [response]);
 
+  useEffect(() => {
+    const getFont = async () => {
+      await Font.loadAsync({
+        Roboto: require("../assets/fonts/Roboto-Medium.ttf"),
+      });
+    };
+
+    getFont();
+    setIsReady(true);
+  }, []);
+
   return (
-    <Button
-      style={styles.button}
-      disabled={!request}
-      title="Login"
-      onPress={() => {
-        promptAsync();
-        console.log("pressed");
-      }}
-    />
+    <View style={styles.container}>
+      {isReady && (
+        <View style={styles.loginBtnWrapper}>
+          <Pressable
+            style={styles.button}
+            disabled={!request}
+            onPress={() => {
+              promptAsync();
+            }}
+          >
+            <Image source={googleNormal} style={styles.google_logo} />
+            <Text style={styles.loginTitle}>Sign in with Google</Text>
+          </Pressable>
+        </View>
+      )}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingTop: 100,
+  },
+  loginBtnWrapper: {
+    flex: 1,
+  },
   button: {
+    backgroundColor: "#4285F4",
+    height: 36,
+    margin: 30,
+    flexDirection: "row",
     alignItems: "center",
-    padding: 10,
-    color: "#242422",
+  },
+  google_logo: {
+    height: 36,
+    width: 36,
+    marginRight: 24,
+  },
+  loginTitle: {
+    color: "white",
+    fontFamily: "Roboto",
+    fontSize: 14,
   },
 });
 
