@@ -6,11 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/like.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+    "scheme": "myapp",
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
