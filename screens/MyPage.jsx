@@ -71,7 +71,7 @@ export default function MyPage() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 111,
+    marginTop: 31,
     marginLeft: 17,
     marginRight: 17,
   },
