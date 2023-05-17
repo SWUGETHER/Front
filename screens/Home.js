@@ -67,7 +67,7 @@ const Home = () => {
                 <Text style={{fontSize: 34, fontWeight: "bold", left: 30, top: 30}}>Contents</Text>
             </View>
             <TouchableOpacity onPress={() => console.log('Contents')}>
-                <Text style={{fontSize: 16, left: 280}}> 전체보기 > </Text>
+                <Text style={{fontSize: 16, left: 280}}> 전체보기 {">"}</Text>
             </TouchableOpacity>
             <Swiper
                 // style={styles.wrapper}
