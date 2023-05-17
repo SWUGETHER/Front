@@ -30,7 +30,7 @@ function Content({ navigation }) {
             </View>
             <TouchableOpacity>
                 <View
-                    style={{width: 36, height: 36, left: 330, top: 30}}
+                    style={{width: 50, height: 50, left: 330, top: 30}}
                     onTouchStart={handleLikePressIn}
                     onTouchEnd={handleLikePressOut}
                     onTouchCancel={handleLikePressOut}
@@ -38,7 +38,7 @@ function Content({ navigation }) {
                 >
                     <ImageBackground
                     source={require('../../assets/like.png')}
-                    style={{tintColor: likeColor}}
+                    style={{tintColor: likeColor, width: 36, height: 36}}
                     imageStyle={styles.likeBackground}
                     >
                         <Text style={styles.countText}>{count}</Text>
@@ -46,14 +46,16 @@ function Content({ navigation }) {
                 </View>
             </TouchableOpacity>
             <View style={styles.textWrap}>
-                <Text style={styles.title}> 생리대 착용 방법 </Text>
-                <Text style={styles.date}> 23.04.05 </Text>
-                <TouchableOpacity onPress={() => console.log("수정 press")}>
-                    <Text>수정</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => console.log("삭제 press")}>
-                    <Text>삭제</Text>
-                </TouchableOpacity>
+            <Text style={styles.title}> 생리대 착용 방법 </Text>
+                <View style={styles.controlTextWrapper}>
+                    <Text style={styles.date}> 23.04.05 </Text>
+                    <TouchableOpacity onPress={() => console.log("수정 press")}>
+                        <Text style={[styles.controlText, {left: 100,}]}>| 수정</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => console.log("삭제 press")}>
+                        <Text style={[styles.controlText, {left: 150}]}>| 삭제</Text>
+                    </TouchableOpacity>
+                </View>
                 <Text style={styles.text}>
                     lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop 
                 </Text>
@@ -85,21 +87,29 @@ const styles = StyleSheet.create({
         top: -15,
         left: -8,
         fontWeight: 'bold',
-        fontSize: 34
-    },
-    date: {
-        top: -10,
-        left: -5,
-        fontSize: 20
-    },
-    text: {
-        // top: 20,
         fontSize: 24
     },
-    countText: {
-        top: 30,
-        left: 10,
+    controlTextWrapper: {
+        // top: ,
+        fontSize: 12,
+        
+    }, 
+    date: {
+        position: 'absolute',
+        fontSize: 12
+    },
+    controlText: {
+        position: 'absolute',
+        fontSize: 12,
+    },
+    text: {
+        top: 50,
         fontSize: 20
+    },
+    countText: {
+        top: 40,
+        textAlign: 'center',
+        fontSize: 12
     }
 })
 

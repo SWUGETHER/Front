@@ -64,10 +64,10 @@ const Home = () => {
                 />
             </View>
             <View>
-                <Text style={{fontSize: 34, fontWeight: "bold", left:'10%', top: 50}}>Contents</Text>
+                <Text style={{fontSize: 34, fontWeight: "bold", left: 30, top: 30}}>Contents</Text>
             </View>
             <TouchableOpacity onPress={() => console.log('Contents')}>
-                <Text > 전체보기 > </Text>
+                <Text style={{fontSize: 16, left: 280}}> 전체보기 > </Text>
             </TouchableOpacity>
             <Swiper
                 // style={styles.wrapper}
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     slide: {
         width: 330,
         height: 200,
-        top: 10,
+        top: 30,
         left: '105%',
         borderRadius: 20,
         backgroundColor: '#D9D9D9',
