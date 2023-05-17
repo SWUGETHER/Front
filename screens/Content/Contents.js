@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Text, Pressable, Button } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import { Like }  from '../../assets/like.png';
 
 
-function Contents({navigation}) {
+function Contents() {
     const goToContent = () => console.log("press")
 
     return (
@@ -70,22 +70,21 @@ const styles = StyleSheet.create({
     },
     content_wrap: {
         position: 'absolute',
-        width: 350,
-        height: 749,
-        top: 20,
-        left: 20,
         justifyContent: 'center',
         flex: 1
     },
     content: {
-        height: 173,
-        borderRadius: 8,
+        width: 330,
+        height: 200,
+        top: 90,
+        left: 10,
+        borderRadius: 20,
         backgroundColor: '#D9D9D9',
         margin: 19,
-        borderRadius: 10,
         shadowOffset: { height: 0 , width: 4 },
         shadowColor: 'rgba(0, 0, 0, 0.25)',
     },
+    
     title: {
         position:'absolute', 
         fontSize: 20, 
@@ -97,7 +96,7 @@ const styles = StyleSheet.create({
         position:'absolute', 
         fontSize: 14, 
         fontWeight:'bold', 
-        bottom: 16, 
+        bottom: 18, 
         right: 16
     },
     likeCount: {
