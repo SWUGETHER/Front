@@ -30,7 +30,7 @@ function Content({ navigation }) {
             </View>
             <TouchableOpacity>
                 <View
-                    style={{width: 50, height: 50, left: 330, top: 30}}
+                    style={{width: 50, height: 50, left: 330, top: 25}}
                     onTouchStart={handleLikePressIn}
                     onTouchEnd={handleLikePressOut}
                     onTouchCancel={handleLikePressOut}
@@ -49,11 +49,13 @@ function Content({ navigation }) {
             <Text style={styles.title}> 생리대 착용 방법 </Text>
                 <View style={styles.controlTextWrapper}>
                     <Text style={styles.date}> 23.04.05 </Text>
+                    <Text style={[styles.controlText, {left: 60}]}> {"|"} </ Text>
                     <TouchableOpacity onPress={() => console.log("수정 press")}>
-                        <Text style={[styles.controlText, {left: 100,}]}>| 수정</Text>
+                        <Text style={[styles.controlText, {left: 80,}]}>수정</Text>
                     </TouchableOpacity>
+                    <Text style={[styles.controlText, {left: 110}]}> {"|"} </ Text>
                     <TouchableOpacity onPress={() => console.log("삭제 press")}>
-                        <Text style={[styles.controlText, {left: 150}]}>| 삭제</Text>
+                        <Text style={[styles.controlText, {left: 130}]}>삭제</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.line}>
@@ -74,7 +76,7 @@ const styles = StyleSheet.create({
     },
     imageWrap: {
         height: 300,
-        backgroundColor: '#979797'
+        backgroundColor: '#979797',
     },
     image: {
         width: '100%',
@@ -86,13 +88,13 @@ const styles = StyleSheet.create({
         marginRight: 16,
     },
     title: {
-        top: -15,
-        left: -8,
+        top: -20,
+        left: -5,
         fontWeight: 'bold',
         fontSize: 24
     },
     controlTextWrapper: {
-        // top: ,
+        top: -10,
         fontSize: 12,
     }, 
     date: {
@@ -104,13 +106,13 @@ const styles = StyleSheet.create({
         fontSize: 12,
     },
     line: {
-        top: 30,
+        top: 20,
         borderTopColor: "#979797",
         borderTopWidth: 2,
         borderStyle: "solid",
     },
     text: {
-        top: 10,
+        top: 20,
         fontSize: 20
     },
     countText: {
