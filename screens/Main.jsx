@@ -12,7 +12,7 @@ import MyPage from "./MyPage";
 // const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-export default function Main() {
+export default function Main({ setIsSigned }) {
   return (
     <PaperProvider>
       <NavigationContainer>
@@ -25,7 +25,10 @@ export default function Main() {
           <Tab.Screen name="콘텐츠" component={Contents} />
           <Tab.Screen name="카메라" component={Camera} />
           <Tab.Screen name="좋아요" component={Likes} />
-          <Tab.Screen name="마이페이지" component={MyPage} />
+          <Tab.Screen
+            name="마이페이지"
+            children={() => <MyPage setIsSigned={setIsSigned} />}
+          />
           <Tab.Screen name="컨텐츠세부" component={Content} />
         </Tab.Navigator>
         {/* <View>

@@ -42,7 +42,7 @@ export default function App() {
         <PersistGate loading={null} persistor={persistor}>
           {isLoaded ? (
             isSigned ? (
-              <Main />
+              <Main setIsSigned={setIsSigned} />
             ) : (
               <Login setIsSigned={setIsSigned} />
             )
