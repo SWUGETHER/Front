@@ -1,14 +1,21 @@
 import * as React from "react";
-import { StyleSheet, View, TouchableOpacity, Text, Alert } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Text,
+  Alert,
+  Linking,
+} from "react-native";
 import * as Font from "expo-font";
 import { useSelector, useDispatch } from "react-redux";
 import { signOut } from "../redux/actions/user";
 import userLogout from "../API/userLogout";
 import userRemove from "../API/userRemove";
+import { ADMIN_MAIL_ADDRESS } from "react-native-dotenv";
 
 export default function MyPage({ setIsSigned }) {
   const [isFontReady, setIsFontReady] = React.useState(false);
-  const [isOut, setIsOut] = React.useState(false);
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const currentVersion = state["settingReducer"]["version"]; // 현재 버전
@@ -101,7 +108,12 @@ export default function MyPage({ setIsSigned }) {
           </View>
           <View>
             <View style={styles.listWrapper}>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  // 메일 어플 연결
+                  Linking.openURL(`mailto: ${ADMIN_MAIL_ADDRESS}`);
+                }}
+              >
                 <Text>1:1 문의하기 {">"}</Text>
               </TouchableOpacity>
               <TouchableOpacity>
