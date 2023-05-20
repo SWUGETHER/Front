@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { Text, View } from "react-native";
 import { useEffect, useState } from "react";
 import React from "react";
+import { useSelector } from "react-redux";
 
 // import 'react-native-gesture-handler';
 import { NavigationContainer } from "@react-navigation/native";
@@ -18,6 +19,7 @@ import MyPage from "./screens/MyPage";
 import Splash from "./screens/Splash";
 import Login from "./screens/Login";
 import Main from "./screens/Main";
+import AfterSplash from "./screens/AfterSplash";
 
 import Navigation from "./navigation/Navigation";
 import StackNavi from "./navigation/StackNavi";
@@ -28,7 +30,6 @@ import { store, persistor } from "./redux/store";
 
 export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isSigned, setIsSigned] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -40,15 +41,7 @@ export default function App() {
     <>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          {isLoaded ? (
-            isSigned ? (
-              <Main setIsSigned={setIsSigned} />
-            ) : (
-              <Login setIsSigned={setIsSigned} />
-            )
-          ) : (
-            <Splash />
-          )}
+          {isLoaded ? <AfterSplash /> : <Splash />}
         </PersistGate>
       </Provider>
     </>
