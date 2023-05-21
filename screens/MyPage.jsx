@@ -1,10 +1,90 @@
 import * as React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Text,
+  Alert,
+  Linking,
+} from "react-native";
 import * as Font from "expo-font";
+import { useSelector, useDispatch } from "react-redux";
+import { signOut } from "../redux/actions/user";
+import userLogout from "../API/userLogout";
+import userRemove from "../API/userRemove";
+import { ADMIN_MAIL_ADDRESS } from "react-native-dotenv";
 
-export default function MyPage() {
-  const [isReady, setIsReady] = React.useState(false);
-  const [isAdmin, setIsAdmin] = React.useState(true);
+export default function MyPage({ setIsSigned }) {
+  const [isFontReady, setIsFontReady] = React.useState(false);
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const currentVersion = state["settingReducer"]["version"]; // 현재 버전
+  const currentVersionNum =
+    currentVersion && currentVersion.replace(/\./g, "").padEnd(6, "0"); // 현재 버전 괄호 안
+  const isAdmin = state["userReducer"]["isAdmin"]; // 관리자 여부
+  const ACCESS_TOKEN = state["userReducer"]["accessToken"]; // accessToken
+
+  // 로그아웃 alert 창
+  const setLogoutAlert = () => {
+    Alert.alert(
+      null,
+      "로그아웃 하시겠습니까?",
+      [
+        { text: "취소", onPress: () => {}, style: "cancel" },
+        {
+          text: "로그아웃",
+          onPress: onPressLogout,
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  // 로그아웃 alert 창
+  const setLeaveAlert = () => {
+    Alert.alert(
+      null,
+      "회원탈퇴를 진행하시겠습니까?",
+      [
+        { text: "취소", onPress: () => {}, style: "cancel" },
+        {
+          text: "회원탈퇴",
+          onPress: onPressLeave,
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  const onPressLogout = async () => {
+    const isSuccess = await userLogout(ACCESS_TOKEN);
+    if (isSuccess) {
+      dispatch(signOut());
+      setIsSigned(false);
+    } else {
+      Alert.alert(
+        null,
+        "로그아웃 과정에서 오류가 발생하였습니다. 다시 시도하여 주세요.",
+        [{ text: "확인", onPress: () => {} }],
+        { cancelable: true }
+      );
+    }
+  };
+
+  const onPressLeave = async () => {
+    const isSuccess = await userRemove(ACCESS_TOKEN);
+    if (isSuccess) {
+      dispatch(signOut());
+      setIsSigned(false);
+    } else {
+      Alert.alert(
+        null,
+        "회원탈퇴 과정에서 오류가 발생하였습니다. 다시 시도하여 주세요.",
+        [{ text: "확인", onPress: () => {} }],
+        { cancelable: true }
+      );
+    }
+  };
 
   React.useEffect(() => {
     // font
@@ -12,55 +92,67 @@ export default function MyPage() {
       await Font.loadAsync({
         Inter: require("../assets/fonts/Inter-Regular.ttf"),
       }).then(() => {
-        setIsReady(true);
+        setIsFontReady(true);
       });
     };
-
-    // 관리자 여부 체크
 
     getFont();
   }, []);
 
   return (
     <View style={styles.container}>
-      {isReady && (
+      {isFontReady && (
         <View>
           <View style={styles.titleWrapper}>
             <Text style={styles.title}>기타</Text>
           </View>
           <View>
             <View style={styles.listWrapper}>
-              <Text onPress={() => console.log("pressed")}>
-                1:1 문의하기 {">"}
-              </Text>
-              <Text>공지사항 {">"}</Text>
-              <View style={styles.versionContainer}>
+              <TouchableOpacity
+                onPress={() => {
+                  // 메일 어플 연결
+                  Linking.openURL(`mailto: ${ADMIN_MAIL_ADDRESS}`);
+                }}
+              >
+                <Text>1:1 문의하기 {">"}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text>공지사항 {">"}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.versionContainer}>
                 <View style={styles.updateWrapper}>
                   <Text>최신버전 업데이트 {">"}</Text>
                   <Text style={styles.newVersion}>최신버전: {`23.15.0`}</Text>
                 </View>
-                <Text style={styles.version}>{`23.14.0(231400)`}</Text>
-              </View>
+                <Text
+                  style={styles.version}
+                >{`${currentVersion}(${currentVersionNum})`}</Text>
+              </TouchableOpacity>
             </View>
             {isAdmin ? (
               <View style={styles.adminMenuWrapper}>
-                <View style={styles.titleWrapper}>
+                <TouchableOpacity style={styles.titleWrapper}>
                   <Text style={styles.title}>내가 쓴 글</Text>
-                </View>
-                <View style={styles.listWrapper}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.listWrapper}>
                   <Text>내가 쓴 글 {">"}</Text>
-                </View>
+                </TouchableOpacity>
               </View>
             ) : (
               <View style={styles.space}></View>
             )}
             <View style={styles.logoutContainer}>
-              <View style={styles.logoutWrapper}>
+              <TouchableOpacity
+                style={styles.logoutWrapper}
+                onPress={setLogoutAlert}
+              >
                 <Text style={styles.logout}>LOGOUT</Text>
-              </View>
+              </TouchableOpacity>
             </View>
             <View style={styles.leaveWrapper}>
-              <Text style={styles.leave}>회원탈퇴</Text>
+              <TouchableOpacity onPress={setLeaveAlert}>
+                <Text style={styles.leave}>회원탈퇴</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
