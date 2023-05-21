@@ -1,10 +1,11 @@
-import * as React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import React from "react";
+import { View } from "react-native";
+import ContentList from "../ContentList";
 
 function Likes() {
     return (
         <View>
-            <Text>Likes</Text>
+            <ContentList />
         </View>
     );
 }

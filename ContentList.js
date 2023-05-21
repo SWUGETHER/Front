@@ -1,13 +1,11 @@
 import React, { useRef, useEffect } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
-import Swiper from "react-native-swiper";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Dimensions } from 'react-native';
-import ContentList from "../ContentList";
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
-const Home = () => {
+function ContentList() {
     const slideList = [
         {
             id: 1,
@@ -32,50 +30,13 @@ const Home = () => {
         },
     ]; // 컨텐츠 리스트
 
-    const swiperRef = useRef(null);
-
-    useEffect(() => {
-        const autoAdvance = setInterval(() => {
-            if (swiperRef.current) {
-                const { index, total } = swiperRef.current.state;
-                if (index < total - 1) {
-                    swiperRef.current.scrollBy(1, true);
-                } else {
-                    swiperRef.current.scrollTo(0, true);
-                }
-            }
-        }, 5000);
-        
-        return () => {
-            clearInterval(autoAdvance);
-        };
-    }, []);
-
     const handleSlidePress = (content) => {
         console.log(`Navigate to ${content}`);
     };
-
+    
     return (
         <View style={styles.container}>
-            <View style={styles.imageWrapper}>
-                {/* <Text> 난 짱이다 </Text> */}
-                <Image
-                    source={require('../assets/sample.png')}
-                    style={styles.image}
-                />
-            </View>
             <View>
-                <Text style={{fontSize: 34, fontWeight: "bold", left: 30, top: 30}}>Contents</Text>
-            </View>
-            <TouchableOpacity onPress={() => console.log('Contents')}>
-                <Text style={{fontSize: 16, left: 280}}> 전체보기 {">"}</Text>
-            </TouchableOpacity>
-            <Swiper
-                autoplay
-                autoplayTimeout={5000}
-                showsPagination={false}
-                ref={swiperRef}
-            >
                 {slideList.map((slide) => (
                     <TouchableOpacity
                         key={slide.id} 
@@ -87,12 +48,11 @@ const Home = () => {
                         <Text style={styles.likeCount}>{slide.likeCount}</Text>
                     </TouchableOpacity>
                 ))}
-                {/* <ContentList /> */}
-            </Swiper>
+            </View>
         </View>
     );
-};
-
+    
+}
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -101,25 +61,37 @@ const styles = StyleSheet.create({
         width: windowWidth,
         marginTop: 30,
     },
-    imageWrapper: {
-        flex: 1,
-        height: 300,
-        backgroundColor: '#D9D9D9'
-    },
-    image: {
-        flex: 1,
-        width: '100%',
-        height: '100%'
-    },
     slide: {
         width: 330,
         height: 200,
-        top: 30,
         left: 30,
         borderRadius: 20,
         backgroundColor: '#D9D9D9',
         alignItems: 'center',
+        marginBottom: 19,
     },
+    title: {
+        position:'absolute', 
+        fontSize: 20, 
+        fontWeight:'bold', 
+        bottom: 15, 
+        left: 12
+    },
+    date: {
+        position:'absolute', 
+        fontSize: 14, 
+        fontWeight:'bold', 
+        bottom: 18, 
+        right: 16
+    },
+    likeCount: {
+        position:'absolute', 
+        fontSize: 14, 
+        fontWeight:'bold', 
+        top: 46, 
+        right: 16
+    },
+    
 });
 
-export default Home;
+export default ContentList;

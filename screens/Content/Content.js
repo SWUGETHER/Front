@@ -30,7 +30,7 @@ function Content({ navigation }) {
             </View>
             <TouchableOpacity>
                 <View
-                    style={{width: 36, height: 36, left: 330, top: 30}}
+                    style={{width: 50, height: 50, left: 330, top: 25}}
                     onTouchStart={handleLikePressIn}
                     onTouchEnd={handleLikePressOut}
                     onTouchCancel={handleLikePressOut}
@@ -38,7 +38,7 @@ function Content({ navigation }) {
                 >
                     <ImageBackground
                     source={require('../../assets/like.png')}
-                    style={{tintColor: likeColor}}
+                    style={{tintColor: likeColor, width: 36, height: 36}}
                     imageStyle={styles.likeBackground}
                     >
                         <Text style={styles.countText}>{count}</Text>
@@ -46,17 +46,23 @@ function Content({ navigation }) {
                 </View>
             </TouchableOpacity>
             <View style={styles.textWrap}>
-                <Text style={styles.title}> 생리대 착용 방법 </Text>
-                <Text style={styles.date}> 23.04.05 </Text>
-                <TouchableOpacity onPress={() => console.log("수정 press")}>
-                    <Text>수정</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => console.log("삭제 press")}>
-                    <Text>삭제</Text>
-                </TouchableOpacity>
-                <Text style={styles.text}>
-                    lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop 
-                </Text>
+            <Text style={styles.title}> 생리대 착용 방법 </Text>
+                <View style={styles.controlTextWrapper}>
+                    <Text style={styles.date}> 23.04.05 </Text>
+                    <Text style={[styles.controlText, {left: 60}]}> {"|"} </ Text>
+                    <TouchableOpacity onPress={() => console.log("수정 press")}>
+                        <Text style={[styles.controlText, {left: 80,}]}>수정</Text>
+                    </TouchableOpacity>
+                    <Text style={[styles.controlText, {left: 110}]}> {"|"} </ Text>
+                    <TouchableOpacity onPress={() => console.log("삭제 press")}>
+                        <Text style={[styles.controlText, {left: 130}]}>삭제</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.line}>
+                    <Text style={styles.text}>
+                        lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop 
+                    </Text>
+                </View>
             </View>
         </View>
     );
@@ -70,7 +76,7 @@ const styles = StyleSheet.create({
     },
     imageWrap: {
         height: 300,
-        backgroundColor: '#979797'
+        backgroundColor: '#979797',
     },
     image: {
         width: '100%',
@@ -82,24 +88,37 @@ const styles = StyleSheet.create({
         marginRight: 16,
     },
     title: {
-        top: -15,
-        left: -8,
-        fontWeight: 'bold',
-        fontSize: 34
-    },
-    date: {
-        top: -10,
+        top: -20,
         left: -5,
-        fontSize: 20
-    },
-    text: {
-        // top: 20,
+        fontWeight: 'bold',
         fontSize: 24
     },
-    countText: {
-        top: 30,
-        left: 10,
+    controlTextWrapper: {
+        top: -10,
+        fontSize: 12,
+    }, 
+    date: {
+        position: 'absolute',
+        fontSize: 12
+    },
+    controlText: {
+        position: 'absolute',
+        fontSize: 12,
+    },
+    line: {
+        top: 20,
+        borderTopColor: "#979797",
+        borderTopWidth: 2,
+        borderStyle: "solid",
+    },
+    text: {
+        top: 20,
         fontSize: 20
+    },
+    countText: {
+        top: 40,
+        textAlign: 'center',
+        fontSize: 12
     }
 })
 
