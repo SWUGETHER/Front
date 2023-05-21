@@ -24,11 +24,13 @@ const Login = ({ setIsSigned }) => {
   useEffect(() => {
     const setUserData = async (id_token) => {
       try {
+        // server 필요 -> 나중에 server 완성되면 주석 해제하기
         // const { userId, email, accessToken, refreshToken, isAdmin } =
         //   await userLogin(id_token);
         // dispatch(signIn(userId, email, accessToken, refreshToken, isAdmin));
 
-        // for test
+        // for test (임시 데이터) -> server 완성되면 아래 *로 감싸진 부분 지우기
+        //*
         dispatch(
           signIn(
             1,
@@ -38,6 +40,7 @@ const Login = ({ setIsSigned }) => {
             false
           )
         );
+        //*
 
         dispatch(setVersion("23.14.0"));
         setIsSigned(true);
