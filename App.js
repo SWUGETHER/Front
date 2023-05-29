@@ -1,9 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { Provider as PaperProvider } from 'react-native-paper';
-
 import Splash from "./screens/Splash";
-import Navigation from "./Navigation";
+import AfterSplash from "./screens/AfterSplash";
+
+import { PersistGate } from "redux-persist/integration/react";
+import { Provider } from "react-redux";
+import { store, persistor } from "./redux/store";
 
 export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -16,13 +18,11 @@ export default function App() {
   return (
     <>
       <StatusBar style="auto" />
-      {isLoaded ? (
-      <PaperProvider>
-        <Navigation />
-      </PaperProvider>
-      ) : (
-        <Splash />
-      )}
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          {isLoaded ? <AfterSplash /> : <Splash />}
+        </PersistGate>
+      </Provider>
     </>
   );
 }
