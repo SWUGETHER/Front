@@ -3,15 +3,27 @@
 import * as React from 'react';
 import {Alert, View,Button} from 'react-native';
 import {launchCameraAsync,useCameraPermissions,PermissionStatus} from 'expo-image-picker';
-//import { Colors } from 'react-native/Libraries/NewAppScreen';
+// import Scanner, { Filters, RectangleOverlay } from 'react-native-rectangle-scanner';
 
-function Camera() {
+export default function Camera() {
     const [cameraPermissionInformation,requerstPermission]=useCameraPermissions();
+    const [scannedImage, setScannedImage] = useState();
+    
+    const scanDocument = async () => {
+        const { scannedImage } = await DocumentScanner.scanDocument()
+
+        if (scannedImage.length > 0) {
+            setScannedImage(scannedImage[0])
+        }
+    }
+
+    useEffect(() => {
+        scanDocument
+    }, []);
     //카메라 사용 권한 확인
     async function verifyPermissions(){
         if(cameraPermissionInformation.status===PermissionStatus.UNDETERMINED){
             const permissionResponse= await requerstPermission();
-
             return permissionResponse.granted;
         }
         if(cameraPermissionInformation.status===PermissionStatus.DENIED){
@@ -36,18 +48,11 @@ function Camera() {
     }
     return (
         <View>
-             
-            <View>
-            </View>
-            
             <Button 
                 title="카메라 촬영"
                 onPress={takeImageHandler}
                 color={"#35363A"}   
             />
-           
         </View>
-        
     );
 }
-export default Camera;

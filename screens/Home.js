@@ -2,12 +2,13 @@ import React, { useRef, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 import Swiper from "react-native-swiper";
 import { Dimensions } from 'react-native';
-import ContentList from "../ContentList";
+import { useNavigation } from "@react-navigation/native";
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
 const Home = () => {
+    const navigation = useNavigation();
     const slideList = [
         {
             id: 1,
@@ -51,24 +52,27 @@ const Home = () => {
         };
     }, []);
 
-    const handleSlidePress = (content) => {
-        console.log(`Navigate to ${content}`);
-    };
+    function pressAllHandler(item) {
+        navigation.navigate('TabNavi', { screen: '콘텐츠' });
+    }
+
+    function pressHandler(item) {
+        navigation.navigate("Content", { title: item.title });
+    }
 
     return (
         <View style={styles.container}>
             <View style={styles.imageWrapper}>
-                {/* <Text> 난 짱이다 </Text> */}
                 <Image
                     source={require('../assets/sample.png')}
                     style={styles.image}
                 />
             </View>
             <View>
-                <Text style={{fontSize: 34, fontWeight: "bold", left: 30, top: 30}}>Contents</Text>
+                <Text style={{fontSize: 34, fontWeight: "bold", left: 40, top: 40}}>Contents</Text>
             </View>
-            <TouchableOpacity onPress={() => console.log('Contents')}>
-                <Text style={{fontSize: 16, left: 280}}> 전체보기 {">"}</Text>
+            <TouchableOpacity onPress={pressAllHandler}>
+                <Text style={{fontSize: 16, left: 300, top: 10}}> 전체보기 {">"}</Text>
             </TouchableOpacity>
             <Swiper
                 autoplay
@@ -80,14 +84,13 @@ const Home = () => {
                     <TouchableOpacity
                         key={slide.id} 
                         style={styles.slide}
-                        onPress={() => handleSlidePress(slide.content)}
+                        onPress={pressHandler}
                     >
                         <Text style={styles.title}>{slide.title}</Text>
                         <Text style={styles.date}>{slide.date}</Text>
                         <Text style={styles.likeCount}>{slide.likeCount}</Text>
                     </TouchableOpacity>
                 ))}
-                {/* <ContentList /> */}
             </Swiper>
         </View>
     );
@@ -114,12 +117,46 @@ const styles = StyleSheet.create({
     slide: {
         width: 330,
         height: 200,
-        top: 30,
+        top: 50,
         left: 30,
         borderRadius: 20,
         backgroundColor: '#D9D9D9',
         alignItems: 'center',
+        marginBottom: 19,
+        shadowColor: 'black',
+        shadowOpacity: 0.25,
+        shadowOffset: { width: 0, height: 4},
+        shadowRadius: 4
     },
+    title: {
+        position:'absolute', 
+        fontSize: 20, 
+        fontWeight:'bold', 
+        bottom: 15, 
+        left: 12
+    },
+    date: {
+        position:'absolute', 
+        fontSize: 14, 
+        fontWeight:'bold', 
+        bottom: 18, 
+        right: 16
+    },
+    imageWrap: {
+        height: 300,
+        backgroundColor: '#979797',
+    },
+    image: {
+        width: '100%',
+        height: '100%'
+    },
+    likeCount: {
+        position:'absolute', 
+        fontSize: 14, 
+        fontWeight:'bold', 
+        top: 46, 
+        right: 16
+    }
 });
 
 export default Home;

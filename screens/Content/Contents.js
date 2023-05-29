@@ -1,12 +1,15 @@
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import ContentList from '../../ContentList';
+import ContentList from './ContentList';
+import { Dimensions } from 'react-native';
+import ContentButton from '../../UI/ContentButton';
+
+const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width;
 
 function Contents() {
-    const goToContent = () => console.log("press")
-
     return (
-        <View>
+        <View style={styles.container}>
             <View style={styles.tag_wrap}>
                 <TouchableOpacity style={styles.tag} onPress={() => console.log('최신순 press')}> 
                     <Text style={styles.tag_text}>최신순</Text> 
@@ -18,20 +21,31 @@ function Contents() {
                     <Text style={styles.tag_text}>하트순</Text> 
                 </TouchableOpacity>
             </View>
-            <View style={{top: 60}}>
+            <View style={{ marginTop: 60 }}>
                 <ContentList />
+            </View>
+            <View>
+                <ContentButton/>
             </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    container: {
+        height: windowHeight,
+        width: windowWidth,
+        backgroundColor: '#ffffff',
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center"
+    },
     tag_wrap: {
         position: 'absolute',
         width: 330,
         height: 30,
         top: 30,
-        left: 30,
+        left: 40,
         flexDirection: 'row',
         flex: 1,
         alignItems: 'center',
@@ -40,12 +54,16 @@ const styles = StyleSheet.create({
         height: 30,
         backgroundColor: '#D9D9D9',
         borderRadius: 40,
-        shadowOffset: { height: 0, widht: 4},
+        shadowOffset: { height: 0, width: 4},
         shadowColor: 'rgba(0, 0, 0, 0.25)',
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-around',
-        margin: 14
+        margin: 14,
+        shadowColor: 'black',
+        shadowOpacity: 0.25,
+        shadowOffset: { width: 0, height: 4},
+        shadowRadius: 4
     },
     tag_text: {
         fontSize: 16, 

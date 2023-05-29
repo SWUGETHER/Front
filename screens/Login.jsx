@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Pressable, View, Text, Image } from "react-native";
-import * as Font from "expo-font";
 import * as Google from "expo-auth-session/providers/google";
-import { useDispatch } from "react-redux";
+import { StyleSheet, Pressable, View, Text, Image } from "react-native";
+import googleNormal from "../assets/google_oauth_normal.png";
+import * as Font from "expo-font";
 import {
   GOOGLE_OAUTH_CLIENT_ID_EXPO,
   GOOGLE_OAUTH_CLIENT_ID_ANDROID,
 } from "react-native-dotenv";
-import googleNormal from "../assets/google_oauth_normal.png";
-import userLogin from "../API/userLogin";
-import { signIn } from "../redux/actions/user";
-import { setVersion } from "../redux/actions/version";
 
-const Login = ({ setIsSigned }) => {
-  const dispatch = useDispatch();
+const Login = () => {
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId: GOOGLE_OAUTH_CLIENT_ID_EXPO,
     androidClientId: GOOGLE_OAUTH_CLIENT_ID_ANDROID,
@@ -22,36 +17,9 @@ const Login = ({ setIsSigned }) => {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    const setUserData = async (id_token) => {
-      try {
-        // server 필요 -> 나중에 server 완성되면 주석 해제하기
-        // const { userId, email, accessToken, refreshToken, isAdmin } =
-        //   await userLogin(id_token);
-        // dispatch(signIn(userId, email, accessToken, refreshToken, isAdmin));
-
-        // for test (임시 데이터) -> server 완성되면 아래 *로 감싸진 부분 지우기
-        //*
-        dispatch(
-          signIn(
-            1,
-            "swu@swu.ac.kr",
-            "token_sample1234@",
-            "refresh_sample1234@",
-            false
-          )
-        );
-        //*
-
-        dispatch(setVersion("23.14.0"));
-        setIsSigned(true);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     if (response?.type === "success") {
-      const id_token = response["params"]["id_token"];
-      setUserData(id_token);
+      const { authentication } = response;
+      console.log(authentication);
     }
   }, [response]);
 

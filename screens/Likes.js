@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import ContentList from "../ContentList";
+import ContentList from "./Content/ContentList";
 
 function Likes() {
     return (
