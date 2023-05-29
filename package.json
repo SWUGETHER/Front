@@ -10,12 +10,15 @@
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.3",
+    "@react-native-async-storage/async-storage": "^1.18.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-firebase/storage": "^17.5.0",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
     "@react-navigation/stack": "^6.3.16",
+    "@reduxjs/toolkit": "^1.9.5",
+    "axios": "^1.4.0",
     "expo": "~48.0.15",
     "expo-auth-session": "~4.0.3",
     "expo-font": "~11.1.1",
@@ -36,6 +39,9 @@
     "react-native-svg": "^13.9.0",
     "react-native-swipe-list-view": "^3.2.9",
     "react-native-swiper": "^1.6.0",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1",
+    "redux-persist": "^6.0.0",
     "sass": "^1.62.1"
   },
   "devDependencies": {
