@@ -132,6 +132,7 @@ export default function Navigation() {
           <Stack.Screen name="Contents" component={Contents} />
           <Stack.Screen name="Content" component={Content} />
           <Stack.Screen name="ContentWrite" component={ContentWrite} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </>

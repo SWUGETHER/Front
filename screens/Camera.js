@@ -3,9 +3,11 @@ import { Alert, View, Image, StyleSheet } from 'react-native';
 import { launchCameraAsync, useCameraPermissions, PermissionStatus } from 'expo-image-picker';
 import { useFocusEffect } from '@react-navigation/native';
 import { Dimensions } from 'react-native';
+import CameraButton from '../UI/CameraButton';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
+
 
 export default function Camera() {
     const [cameraPermissionInformation, requestPermission] = useCameraPermissions();
@@ -66,6 +68,9 @@ export default function Camera() {
     return (
         <View style={styles.container}>
             {capturedImage && <Image source={{ uri: capturedImage }} style={styles.imageScan} />}
+            <View>
+                <CameraButton onPress={takeImageHandler} />
+            </View>
         </View>
     );
 }

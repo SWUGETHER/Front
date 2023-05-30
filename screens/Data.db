@@ -1,16 +1,5 @@
-import React, { useRef, useEffect } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, ImageBackground, Image } from "react-native";
-import Swiper from "react-native-swiper";
-import { Dimensions } from 'react-native';
-import { useNavigation } from "@react-navigation/native";
-
-const windowHeight = Dimensions.get('window').height;
-const windowWidth = Dimensions.get('window').width;
-
-const Home = () => {
-    const navigation = useNavigation();
-    const slideList = [
-        {
+const CONTENTS_LIST = [
+    {
             id: 1,
             title: "생리대 착용 방법",
             date: '23.04.05',
@@ -22,7 +11,7 @@ const Home = () => {
             "5. 팬티를 입은 뒤 생리혈이 밖으로 새지 않도록 생리대가 알맞게 접착 되었는지 상태를 확인해주세요.\n" +
             "6. 잠잘 때의 경우에는 생리대를 팬티 기준으로 중간 지점에서 엉덩이쪽(아래쪽)으로 착용하고 자면 됩니다.\n" +
             "잘 때는 생리가 샐 수 있기 때문에 일반 생리대보다 더 큰 오버나이트형을 착용하거나 일반 생리대 두 개를 넓게 착용하시면 됩니다.",
-            image: require('../assets/example3.png'), // 이미지 경로
+            image: require('../../assets/example3.png'), // 이미지 경로
         },
         {
             id: 2, 
@@ -51,7 +40,7 @@ const Home = () => {
             '팬티처럼 입는 생리대 제품입니다.\n'+
             ' 패드형에 비해 면적이 넓어 샘 걱정을 줄일 수 있고, 눕거나 엎드리는 등의 자세를 취했을 때에도 생리가 새는 위험 부담을 줄일 수 있습니다.\n'+
             '착용을 한 후 세탁을 할 일이 없기 때문에 간편한 처리도 가능한 타입이며,  대게는 양이 많은 날, 뒤척임이 많은 밤에 착용을 많이 하는 제품입니다.\n',
-            image: require('../assets/example.png'),
+            image: require('../../assets/example.png'),
         },
         {
             id: 3,
@@ -73,7 +62,7 @@ const Home = () => {
             '생리컵 역시 삽입형이기 때문에 사용 혹은 교체 전 반드시 깨끗하게 손을 씻으면서 위생을 철저하게 지켜주어야 합니다.\n'+
             '관리 또한  삶아서 세척한 후 멸균해야 하며,  평균적으로 한 번에 8시간~12시간 정도 사용이 가능합니다.  \n'+
             '하지만 삽입 후 이물감이나 통증이 느껴진다면 즉시 제거 후 전문의와 상담을 한 후 사용할 필요가 있습니다.\n',
-            image: require('../assets/example.png'),
+            image: require('../../assets/example.png'),
         },
         {
             id: 4,
@@ -95,7 +84,7 @@ const Home = () => {
             '그래서 이물질 혹은 벌레 등이 들어가지 않도록 단단하고 밀폐된 용기에 넣어 보관하고,\n'+
             ' 휴대 시에는 화장품이나 필기 용품과 섞여 오염되지 않도록 지퍼가 달린 파우치에 가지고 다니는 것을 추천합니다.\n\n'+
             '4. 생리대 제거는 꼭 휴지통에 하기',
-            image: require('../assets/example2.png'),
+            image: require('../../assets/example2.png'),
         },
         {
             id: 5,
@@ -131,154 +120,6 @@ const Home = () => {
             ' 하지만, 이런 정상정인 이유와는 다르게 자궁 내막 용종, 감염, 혹은 자궁근종 같은 혹이 있거나, \n'+
             '아니면 난소에 병변이 있는 경우에도 이렇게 질출혈이 유발될 수 있기 때문에 반드시 산부인과 진료가 필요합니다.\n'+
             '또 이 출혈이 단기성이 아니라 3일에서 5일 정도 유지되며 계속 길어 진다면 호르몬 불균형이 같이 동반된 경우도 있기 때문에 질출혈의 양에 상관없이 이때는 산부인과의 진료를 받길 권장합니다.\n\n',
-            image: require('../assets/example4.jpg'),
+            image: require('../../assets/example4.jpg'),
         },
-    ]; // 컨텐츠 리스트 
-
-    const swiperRef = useRef(null);
-
-    useEffect(() => {
-        const autoAdvance = setInterval(() => {
-            if (swiperRef.current) {
-                const { index, total } = swiperRef.current.state;
-                if (index < total - 1) {
-                    swiperRef.current.scrollBy(1, true);
-                } else {
-                    swiperRef.current.scrollTo(0, true);
-                }
-            }
-        }, 5000);
-        
-        return () => {
-            clearInterval(autoAdvance);
-        };
-    }, []);
-
-    function pressAllHandler() {
-        // navigation.navigate('Contents');
-        console.log('pressAll');
-    }
-
-    function pressHandler(item) {
-        navigation.navigate("Content", { title: item.title });
-    }
-
-    return (
-        <View style={styles.container}>
-            <View style={styles.imageWrapper}>
-                <Image
-                    source={require('../assets/sample.png')}
-                    style={styles.image}
-                />
-            </View>
-            <View>
-                <Text style={{fontSize: 34, fontWeight: "bold", left: 40, top: 40}}>Contents</Text>
-            </View>
-            <TouchableOpacity onPress={pressAllHandler}>
-                <Text style={{fontSize: 16, left: 300, top: 10}}> 전체보기 {">"}</Text>
-            </TouchableOpacity>
-            <Swiper
-                autoplay
-                autoplayTimeout={5000}
-                showsPagination={false}
-                ref={swiperRef}
-            >
-                {slideList.slice(0, 3).map((slide) => (
-                    <TouchableOpacity
-                        key={slide.id} 
-                        style={styles.slide}
-                        onPress={pressHandler}
-                    >   
-                        <View style={styles.slideImageWrapper}>
-                            <ImageBackground
-                                source={slide.image}
-                                style={styles.slideImage}
-                            />
-                        </View> 
-                        <Text style={styles.title}>{slide.title}</Text>
-                        <Text style={styles.date}>{slide.date}</Text>
-                        <Text style={styles.likeCount}>{slide.likeCount}</Text>
-                    </TouchableOpacity>
-                ))}
-            </Swiper>
-        </View>
-    );
-};
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        height: windowHeight,
-        width: windowWidth,
-        marginTop: 30,
-    },
-    imageWrapper: {
-        flex: 1,
-        height: 300,
-        backgroundColor: '#D9D9D9'
-    },
-    image: {
-        flex: 1,
-        width: '100%',
-        height: '100%'
-    },
-    slide: {
-        width: 330,
-        height: 200,
-        top: 50,
-        left: 40,
-        borderRadius: 20,
-        backgroundColor: '#D9D9D9',
-        alignItems: 'center',
-        marginBottom: 19,
-        shadowColor: 'black',
-        shadowOpacity: 0.25,
-        shadowOffset: { width: 0, height: 4},
-        shadowRadius: 4
-    },
-    slideImageWrapper: {
-        flex: 1,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        width: '100%',
-        height: '100%',
-        marginBottom: 50,
-        overflow: 'hidden'
-    },
-    slideImage: {
-        flex: 1,
-        resizeMode: 'cover'
-    },
-    title: {
-        position:'absolute', 
-        fontSize: 20, 
-        fontWeight:'bold', 
-        bottom: 15, 
-        left: 12
-    },
-    date: {
-        position:'absolute', 
-        fontSize: 14, 
-        fontWeight:'bold', 
-        bottom: 18, 
-        right: 16
-    },
-    imageWrap: {
-        height: 300,
-        backgroundColor: '#979797',
-    },
-    image: {
-        width: '100%',
-        height: '100%'
-    },
-    likeCount: {
-        position:'absolute', 
-        fontSize: 14, 
-        fontWeight:'bold', 
-        top: 46, 
-        right: 16
-    }
-});
-
-export default Home;
+];

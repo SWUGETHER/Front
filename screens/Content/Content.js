@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, StyleSheet, View, Text, Image, ImageBackground, FlatList } from "react-native";
-import { Dimensions } from 'react-native';
-
-const windowHeight = Dimensions.get('window').height;
-const windowWidth = Dimensions.get('window').width;
+import Contents from './Contents';
 
 function Content() {
     const [count, setCount] = useState(0);
@@ -20,7 +17,7 @@ function Content() {
             "5. 팬티를 입은 뒤 생리혈이 밖으로 새지 않도록 생리대가 알맞게 접착 되었는지 상태를 확인해주세요.\n" +
             "6. 잠잘 때의 경우에는 생리대를 팬티 기준으로 중간 지점에서 엉덩이쪽(아래쪽)으로 착용하고 자면 됩니다.\n" +
             "잘 때는 생리가 샐 수 있기 때문에 일반 생리대보다 더 큰 오버나이트형을 착용하거나 일반 생리대 두 개를 넓게 착용하시면 됩니다.",
-            image: require('../../assets/sample.png'), // 이미지 경로
+            image: require('../../assets/example.png')
         },
         // {
         //     id: 2,
