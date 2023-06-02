@@ -160,7 +160,7 @@ const Home = () => {
     }
 
     function pressHandler(item) {
-        navigation.navigate("Content", { title: item.title });
+        navigation.navigate("Content", { item });
     }
 
     return (
@@ -187,7 +187,7 @@ const Home = () => {
                     <TouchableOpacity
                         key={slide.id} 
                         style={styles.slide}
-                        onPress={pressHandler}
+                        onPress={() => pressHandler(slide)}
                     >   
                         <View style={styles.slideImageWrapper}>
                             <ImageBackground
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
         width: 330,
         height: 200,
         top: 50,
-        left: 40,
+        left: 30,
         borderRadius: 20,
         backgroundColor: '#D9D9D9',
         alignItems: 'center',

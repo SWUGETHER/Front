@@ -135,14 +135,13 @@ function ContentList() {
     ]; // 컨텐츠 리스트 
 
     function pressHandler(item) {
-        navigation.navigate("Content", { title: item.title });
+        navigation.navigate("Content", { item });
     }
     
     const renderItem = ({ item }) => (
         <TouchableOpacity
             style={styles.slide}
             onPress={() => pressHandler(item)}
-
         >
             <View style={styles.slideImageWrapper}>
                 <ImageBackground
@@ -161,7 +160,7 @@ function ContentList() {
             <FlatList
                 data={slideList}
                 renderItem={renderItem}
-                keyExtractor={item => item.id.toString()}
+                keyExtractor={(item) => item.id.toString()}
             />
         </View>
     );
@@ -178,7 +177,7 @@ const styles = StyleSheet.create({
     slide: {
         width: 330,
         height: 200,
-        left: 40,
+        left: 30,
         borderRadius: 20,
         backgroundColor: '#D9D9D9',
         alignItems: 'center',
