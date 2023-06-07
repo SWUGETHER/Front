@@ -3,7 +3,6 @@ import React from 'react';
 import { Pressable,StyleSheet,View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import WriteCircleButton from "../../UI/WriteCircleButton";
-import ContentWrite from "./ContentWrite";
 
 
 function ContentHeader({onSave}){

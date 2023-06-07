@@ -4,6 +4,8 @@ import ContentList from './ContentList';
 import { Dimensions } from 'react-native';
 import ContentButton from '../../UI/ContentButton';
 
+//import FeedButton from '../../UI/FeedButton';
+
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
@@ -27,6 +29,9 @@ function Contents() {
             <View>
                 <ContentButton/>
             </View>
+            {/*<View>
+                <FeedButton/>
+             </View>*/}
         </View>
     );
 }
