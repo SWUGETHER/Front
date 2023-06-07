@@ -10,8 +10,8 @@ import {
 import * as Font from "expo-font";
 import { useSelector, useDispatch } from "react-redux";
 import { signOut } from "../redux/actions/user";
-import userLogout from "../API/userLogout";
-import userRemove from "../API/userRemove";
+import userLogout from "../API/user/userLogout";
+import userRemove from "../API/user/userRemove";
 import { ADMIN_MAIL_ADDRESS } from "react-native-dotenv";
 
 export default function MyPage({ setIsSigned }) {
@@ -22,7 +22,6 @@ export default function MyPage({ setIsSigned }) {
   const currentVersionNum =
     currentVersion && currentVersion.replace(/\./g, "").padEnd(6, "0"); // 현재 버전 괄호 안
   const isAdmin = state["userReducer"]["isAdmin"]; // 관리자 여부
-  const ACCESS_TOKEN = state["userReducer"]["accessToken"]; // accessToken
 
   // 로그아웃 alert 창
   const setLogoutAlert = () => {
@@ -57,7 +56,7 @@ export default function MyPage({ setIsSigned }) {
   };
 
   const onPressLogout = async () => {
-    const isSuccess = await userLogout(ACCESS_TOKEN);
+    const isSuccess = await userLogout(state, dispatch);
     if (isSuccess) {
       dispatch(signOut());
       setIsSigned(false);
@@ -72,7 +71,7 @@ export default function MyPage({ setIsSigned }) {
   };
 
   const onPressLeave = async () => {
-    const isSuccess = await userRemove(ACCESS_TOKEN);
+    const isSuccess = await userRemove(state, dispatch);
     if (isSuccess) {
       dispatch(signOut());
       setIsSigned(false);

@@ -8,7 +8,7 @@ import {
   GOOGLE_OAUTH_CLIENT_ID_ANDROID,
 } from "react-native-dotenv";
 import googleNormal from "../assets/google_oauth_normal.png";
-import userLogin from "../API/userLogin";
+import userLogin from "../API/user/userLogin";
 import { signIn } from "../redux/actions/user";
 import { setVersion } from "../redux/actions/version";
 
@@ -25,23 +25,40 @@ const Login = ({ setIsSigned }) => {
     const setUserData = async (id_token) => {
       try {
         // server 필요 -> 나중에 server 완성되면 주석 해제하기
-        // const { userId, email, accessToken, refreshToken, isAdmin } =
-        //   await userLogin(id_token);
-        // dispatch(signIn(userId, email, accessToken, refreshToken, isAdmin));
+        const {
+          userId,
+          email,
+          accessToken,
+          refreshToken,
+          accessToken_expiration,
+          refreshToken_expiration,
+          isAdmin,
+        } = await userLogin(id_token);
+
+        dispatch(
+          signIn(
+            userId,
+            email,
+            accessToken,
+            refreshToken,
+            accessToken_expiration,
+            refreshToken_expiration,
+            isAdmin
+          )
+        );
 
         // for test (임시 데이터) -> server 완성되면 아래 *로 감싸진 부분 지우기
         //*
-
-        console.log(id_token);
-        dispatch(
-          signIn(
-            1,
-            "swu@swu.ac.kr",
-            "token_sample1234@",
-            "refresh_sample1234@",
-            false
-          )
-        );
+        // console.log(id_token);
+        // dispatch(
+        //   signIn(
+        //     1,
+        //     "swu@swu.ac.kr",
+        //     "token_sample1234@",
+        //     "refresh_sample1234@",
+        //     false
+        //   )
+        // );
         //*
 
         dispatch(setVersion("23.14.0"));

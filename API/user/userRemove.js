@@ -1,8 +1,10 @@
-import apiClient from "./apiClient";
+import { apiClient } from "../apiClient";
 
-const userRemove = async (accessToken) => {
+const userRemove = async (state, dispatch) => {
+  const accessToken = await getToken(state, dispatch);
+
   try {
-    await apiClient.post("/auth/leave", null, {
+    await apiClient.post("/user/leave", null, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

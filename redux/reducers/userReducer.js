@@ -17,6 +17,8 @@ export default (state = initialState, action) => {
         email: action.email,
         accessToken: action.accessToken,
         refreshToken: action.refreshToken,
+        accessToken_expiration: action.accessToken_expiration,
+        refreshToken_expiration: action.refreshToken_expiration,
         isAdmin: action.isAdmin,
       };
     case "SIGNOUT":
@@ -33,6 +35,8 @@ export default (state = initialState, action) => {
         ...state,
         accessToken: action.accessToken,
         refreshToken: action.refreshToken,
+        accessToken_expiration: action.accessToken_expiration,
+        refreshToken_expiration: action.refreshToken_expiration,
       };
     default:
       return state;
