@@ -1,4 +1,5 @@
 import { apiClient } from "../apiClient";
+import { API_BASE_URL } from "react-native-dotenv";
 
 const userLogin = async (id_token) => {
   let userId, email, accessToken, refreshToken, isAdmin;
@@ -11,7 +12,7 @@ const userLogin = async (id_token) => {
 
   try {
     await apiClient
-      .post("/user/login", null, {
+      .post(`${API_BASE_URL}/user/login`, null, {
         headers: {
           "id-token": id_token,
         },

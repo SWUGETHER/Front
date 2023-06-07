@@ -1,12 +1,13 @@
 import { apiClient } from "../apiClient";
 import getToken from "../../util/getToken";
+import { API_BASE_URL } from "react-native-dotenv";
 
 const readList = async (state, dispatch, order) => {
   const accessToken = await getToken(state, dispatch);
 
   try {
     const data = await apiClient
-      .get(`/post`, {
+      .get(`${API_BASE_URL}/post`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -14,7 +15,7 @@ const readList = async (state, dispatch, order) => {
       })
       .then((res) => {
         if (res) {
-          return res["data"];
+          return res["data"]["data"];
         }
         return res;
       });

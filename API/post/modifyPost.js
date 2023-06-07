@@ -1,5 +1,6 @@
 import { apiClient } from "../apiClient";
 import getToken from "../../util/getToken";
+import { API_BASE_URL } from "react-native-dotenv";
 
 const modifyPost = async (state, dispatch, postId, title, content, images) => {
   const accessToken = await getToken(state, dispatch);
@@ -9,7 +10,7 @@ const modifyPost = async (state, dispatch, postId, title, content, images) => {
   formData.append("images", images);
 
   try {
-    await apiClient.patch(`/post/${postId}`, formData, {
+    await apiClient.patch(`${API_BASE_URL}/post/${postId}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${accessToken}`,

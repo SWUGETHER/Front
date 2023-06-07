@@ -1,10 +1,11 @@
 import { apiClient } from "../apiClient";
+import { API_BASE_URL } from "react-native-dotenv";
 
 const refreshToken = async (accessToken, refreshToken) => {
   let newAccessToken, newRefreshToken;
   try {
     await apiClient
-      .post("/user/refresh", null, {
+      .post(`${API_BASE_URL}/user/refresh`, null, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           Refresh: `Bearer ${refreshToken}`,
