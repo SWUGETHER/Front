@@ -124,17 +124,19 @@ function TabNavi({ setIsSigned }) {
   );
 }
 
-export default function Navigation() {
+export default function Navigation({ setIsSigned }) {
   return (
     <>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="TabNavi">
-          <Stack.Screen name="SWUGETHER" component={TabNavi} />
+          <Stack.Screen
+            name="SWUGETHER"
+            children={() => <TabNavi setIsSigned={setIsSigned} />}
+          />
           <Stack.Screen name="Contents" component={Contents} />
           <Stack.Screen name="Content" component={Content} />
           <Stack.Screen name="ContentWrite" component={ContentWrite} />
-          <Stack.Screen name="FeedPage" component={FeedPage}/>
-
+          <Stack.Screen name="FeedPage" component={FeedPage} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

@@ -1,10 +1,10 @@
-import apiClient from "./apiClient";
+import { apiClient } from "../apiClient";
 
 const refreshToken = async (accessToken, refreshToken) => {
   let newAccessToken, newRefreshToken;
   try {
     await apiClient
-      .post("/auth/refresh", null, {
+      .post("/user/refresh", null, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           Refresh: `Bearer ${refreshToken}`,
