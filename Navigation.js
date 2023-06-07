@@ -9,6 +9,7 @@ import Home from "./screens/Home";
 import Contents from "./screens/Content/Contents";
 import Content from "./screens/Content/Content";
 import ContentWrite from "./screens/Content/ContentWrite";
+import FeedPage from "./screens/Feed/FeedPage";
 import Camera from "./screens/Camera";
 import Likes from "./screens/Likes";
 import MyPage from "./screens/MyPage";
@@ -132,6 +133,7 @@ export default function Navigation() {
           <Stack.Screen name="Contents" component={Contents} />
           <Stack.Screen name="Content" component={Content} />
           <Stack.Screen name="ContentWrite" component={ContentWrite} />
+          <Stack.Screen name="FeedPage" component={FeedPage}/>
 
         </Stack.Navigator>
       </NavigationContainer>
