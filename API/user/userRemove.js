@@ -1,10 +1,11 @@
 import { apiClient } from "../apiClient";
+import { API_BASE_URL } from "react-native-dotenv";
 
 const userRemove = async (state, dispatch) => {
   const accessToken = await getToken(state, dispatch);
 
   try {
-    await apiClient.post("/user/leave", null, {
+    await apiClient.post(`${API_BASE_URL}/user/leave`, null, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

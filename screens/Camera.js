@@ -1,91 +1,138 @@
-import React, { useState } from 'react';
-import { Alert, View, Image, StyleSheet } from 'react-native';
-import { launchCameraAsync, useCameraPermissions, PermissionStatus } from 'expo-image-picker';
-import { useFocusEffect } from '@react-navigation/native';
-import { Dimensions } from 'react-native';
-import CameraButton from '../UI/CameraButton';
+import React, { useState, useEffect } from "react";
+import { Alert, View, Image, StyleSheet, Text } from "react-native";
+import {
+  launchCameraAsync,
+  useCameraPermissions,
+  PermissionStatus,
+} from "expo-image-picker";
+import { useFocusEffect } from "@react-navigation/native";
+import { Dimensions } from "react-native";
+import CameraButton from "../UI/CameraButton";
+import axios from "axios";
+import extractData from "../API/ocr/extractData";
 
-const windowHeight = Dimensions.get('window').height;
-const windowWidth = Dimensions.get('window').width;
-
+const windowHeight = Dimensions.get("window").height;
+const windowWidth = Dimensions.get("window").width;
 
 export default function Camera() {
-    const [cameraPermissionInformation, requestPermission] = useCameraPermissions();
-    const [capturedImage, setCapturedImage] = useState(null);
+  const [cameraPermissionInformation, requestPermission] =
+    useCameraPermissions();
+  const [capturedImage, setCapturedImage] = useState(null);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
+  const [fetchedData, setFetchedData] = useState(null);
 
-    // 카메라 사용 권한 확인
-    async function verifyPermissions() {
-        if (!cameraPermissionInformation) {
-        // 값이 null인 경우, 초기 상태일 때이므로 권한을 요청합니다.
-            const permissionResponse = await requestPermission();
-            return permissionResponse.granted;
-        }
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-        if (cameraPermissionInformation.status === PermissionStatus.UNDETERMINED) {
-            const permissionResponse = await requestPermission();
-            return permissionResponse.granted;
-        }
+  useFocusEffect(
+    React.useCallback(() => {
+      takeImageHandler();
+      return () => {
+        // 화면 벗어날 때 필요한 정리 작업 수행
+      };
+    }, [])
+  );
 
-        if (cameraPermissionInformation.status === PermissionStatus.DENIED) {
-            Alert.alert('접근 권한이 없습니다.', '이 앱을 사용하려면 카메라 권한이 필요합니다.');
-            return false;
-        }
-        return true;
+  async function verifyPermissions() {
+    if (!cameraPermissionInformation) {
+      const permissionResponse = await requestPermission();
+      return permissionResponse.granted;
     }
 
-    // 컴포넌트가 화면에 포커스 되는 시점에 함수 호출
-    useFocusEffect(
-        React.useCallback(() => {
-            takeImageHandler();
-            return () => {
-                // 화면 벗어날 때 필요한 정리 작업 수행
-            };
-        }, [])
-    );
-    
-
-    async function takeImageHandler() {
-        try {
-            const hasPermission = await verifyPermissions();
-            if (!hasPermission) {
-                return;
-            }
-
-            // 카메라 열고 이미지 캡쳐
-            const image = await launchCameraAsync({
-                allowsEditing: true,
-                aspect: [16, 9],
-                quality: 0.5,
-            });
-            // 캡쳐한 정보 반환
-            if (!image.canceled) {
-                setCapturedImage(image.uri);
-            }
-        } catch (error) {
-            console.log('Camera capture error:', error);
-        }
+    if (cameraPermissionInformation.status === PermissionStatus.UNDETERMINED) {
+      const permissionResponse = await requestPermission();
+      return permissionResponse.granted;
     }
-    return (
-        <View style={styles.container}>
-            {capturedImage && <Image source={{ uri: capturedImage }} style={styles.imageScan} />}
-            <View>
-                <CameraButton onPress={takeImageHandler} />
-            </View>
-        </View>
-    );
+
+    if (cameraPermissionInformation.status === PermissionStatus.DENIED) {
+      Alert.alert(
+        "접근 권한이 없습니다.",
+        "이 앱을 사용하려면 카메라 권한이 필요합니다."
+      );
+      return false;
+    }
+
+    return true;
+  }
+
+  async function takeImageHandler() {
+    try {
+      const hasPermission = await verifyPermissions();
+      if (!hasPermission) {
+        return;
+      }
+
+      const image = await launchCameraAsync({
+        allowsEditing: true,
+        aspect: [16, 9],
+        quality: 0.5,
+      });
+
+      if (!image.canceled) {
+        const selectedAssetUri = image.assets[0].uri;
+        setCapturedImage(selectedAssetUri);
+        uploadImage(selectedAssetUri);
+      }
+    } catch (error) {
+      console.log("Camera capture error:", error);
+    }
+  }
+
+  async function uploadImage(uri) {
+    try {
+      const formData = new FormData();
+      formData.append("file", {
+        uri: uri,
+        name: "image.jpg",
+        type: "image/jpg",
+      });
+
+      const response = await extractData(formData);
+      console.log(response["data"]);
+      const uploadedImageUrl = response.data.imageUrl;
+      setUploadedImageUrl(uploadedImageUrl);
+    } catch (error) {
+      console.log("Image upload error:", error);
+    }
+  }
+
+  async function fetchData() {
+    try {
+      const response = await axios.get("/image");
+      setFetchedData(response.data);
+    } catch (error) {
+      console.log("Data fetch error:", error);
+    }
+  }
+
+  return (
+    <View style={styles.container}>
+      {capturedImage && (
+        <Image source={{ uri: capturedImage }} style={styles.imageScan} />
+      )}
+      {uploadedImageUrl && (
+        <Image source={{ uri: uploadedImageUrl }} style={styles.imageScan} />
+      )}
+      <View>
+        <CameraButton onPress={takeImageHandler} />
+      </View>
+      {fetchedData && <Text>{fetchedData}</Text>}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: windowWidth,
-        height: windowHeight
-    },
-    imageScan: {
-        flex: 1,
-        width: '100%',
-        height: '100%'
-    }
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    width: windowWidth,
+    height: windowHeight,
+  },
+  imageScan: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
 });

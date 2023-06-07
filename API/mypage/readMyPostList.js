@@ -1,12 +1,13 @@
 import { apiClient } from "../apiClient";
 import getToken from "../../util/getToken";
+import { API_BASE_URL } from "react-native-dotenv";
 
 const readMyPostList = async (state, dispatch) => {
   const accessToken = await getToken(state, dispatch);
 
   try {
     const data = await apiClient
-      .get(`/mypage/post`, {
+      .get(`${API_BASE_URL}/mypage/post`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
