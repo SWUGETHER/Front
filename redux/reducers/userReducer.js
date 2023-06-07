@@ -4,6 +4,8 @@ const initialState = {
   email: null,
   accessToken: null,
   refreshToken: null,
+  accessToken_expiration: null,
+  refreshToken_expiration: null,
   isAdmin: false,
 };
 
@@ -28,6 +30,8 @@ export default (state = initialState, action) => {
         email: null,
         accessToken: null,
         refreshToken: null,
+        accessToken_expiration: null,
+        refreshToken_expiration: null,
         isAdmin: false,
       };
     case "REFRESH":
