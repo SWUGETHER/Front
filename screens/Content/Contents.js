@@ -31,7 +31,7 @@ function Contents() {
             </View>
             {/*<View>
                 <FeedButton/>
-             </View>*/}
+            </View>*/}
         </View>
     );
 }

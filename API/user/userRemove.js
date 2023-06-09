@@ -1,5 +1,9 @@
 import { apiClient } from "../apiClient";
+<<<<<<< Updated upstream
 import { API_BASE_URL } from "react-native-dotenv";
+=======
+import getToken from "../../util/getToken";
+>>>>>>> Stashed changes
 
 const userRemove = async (state, dispatch) => {
   const accessToken = await getToken(state, dispatch);
