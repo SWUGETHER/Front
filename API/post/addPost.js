@@ -8,7 +8,13 @@ const addPost = async (state, dispatch, title, content, images) => {
   const formData = new FormData();
   formData.append("title", title);
   formData.append("content", content);
-  formData.append("images", images);
+  images.map((image) =>
+    formData.append("images", {
+      uri: image.uri,
+      type: image.type,
+      name: image.name,
+    })
+  );
 
   try {
     const postId = await apiClient
