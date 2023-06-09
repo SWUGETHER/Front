@@ -4,10 +4,17 @@ import { API_BASE_URL } from "react-native-dotenv";
 
 const modifyPost = async (state, dispatch, postId, title, content, images) => {
   const accessToken = await getToken(state, dispatch);
+
   const formData = new FormData();
   formData.append("title", title);
   formData.append("content", content);
-  formData.append("images", images);
+  images.map((image) =>
+    formData.append("images", {
+      uri: image.uri,
+      type: image.type,
+      name: image.name,
+    })
+  );
 
   try {
     await apiClient.patch(`${API_BASE_URL}/post/${postId}`, formData, {

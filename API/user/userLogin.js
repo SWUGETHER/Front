@@ -12,11 +12,7 @@ const userLogin = async (id_token) => {
 
   try {
     await apiClient
-<<<<<<< Updated upstream
       .post(`${API_BASE_URL}/user/login`, null, {
-=======
-      .post("http://192.168.219.103:8080/user/login", null, {
->>>>>>> Stashed changes
         headers: {
           "id-token": id_token,
         },
