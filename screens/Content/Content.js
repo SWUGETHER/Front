@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, StyleSheet, View, Text, Image, ImageBackground, FlatList,ScrollView } from "react-native";
-import { Dimensions } from 'react-native';
-
-const windowHeight = Dimensions.get('window').height;
-const windowWidth = Dimensions.get('window').width;
+import { TouchableOpacity, StyleSheet, View, Text, ImageBackground, ScrollView } from "react-native";
 
 function Content({ route }) {
     const [count, setCount] = useState(0);
