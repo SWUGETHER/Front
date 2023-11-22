@@ -14,14 +14,6 @@ function Content({ route }) {
                     >
                     </ImageBackground>
                     <View style={styles.contentTextContainer}>
-                        <TouchableOpacity style={styles.likeButton}>
-                            <ImageBackground
-                                source={require('../../assets/tabNavi/likes_inactive.png')}
-                                style={styles.likeBackground}
-                            >
-                            <Text style={styles.countText}>{count}</Text>
-                            </ImageBackground>
-                        </TouchableOpacity>
                         <Text style={styles.title}>{item.title}</Text>
                         <View style={styles.controlTextWrapper}>
                             <Text style={styles.date}>{item.date}</Text>
@@ -48,7 +40,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#D9D9D9',
     },
     flatlistContentContainer: {
-        
         paddingBottom: 40,
     },
     contentItemContainer: {
@@ -58,22 +49,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 300,
     },
-    likeButton: {
-        width: 60,
-        height: 60,
-        position: 'absolute',
-        left: 320,
-        top: -5,
-    },
-    likeBackground: {
-        width: 36,
-        height: 36,
-    },
-    countText: {
-        textAlign: 'center',
-        fontSize: 12,
-        top: 38
-    },
+    
     contentTextContainer: {
         paddingHorizontal: 16,
         marginTop: 16,

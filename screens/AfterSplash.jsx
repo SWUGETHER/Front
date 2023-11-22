@@ -16,11 +16,12 @@ export default function AfterSplash() {
 
   return (
     <>
-      {isSigned ? (
+      {/* {isSigned ? (
         <Main setIsSigned={setIsSigned} />
       ) : (
         <Login setIsSigned={setIsSigned} />
-      )}
+      )} */}
+      <Main setIsSigned={setIsSigned} />
     </>
   );
 }

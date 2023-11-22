@@ -5,8 +5,8 @@ export default class Splash extends React.Component {
   render() {
     return (
       <View style={styles.background}>
-        <Text style={{fontSize: 30, fontWeight:'bold', textAlign: 'center'}}>SWUGETHER</Text>
-        <Image source={require('../assets/sample.png')} style={styles.image} />
+        {/* <Text style={{fontSize: 30, fontWeight:'bold', textAlign: 'center'}}>SWUGETHER</Text> */}
+        <Image source={require("../assets/Logo.png")} style={styles.image} />
       </View>
     );
   }
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   background: {
     width: "100%",
     height: "100%",
-    backgroundColor: "white",
+    backgroundColor: "#f7e600",
     justifyContent: "center",
     alignItems: "center",
   },

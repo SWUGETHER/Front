@@ -54,7 +54,6 @@ export default function Camera() {
       );
       return false;
     }
-
     return true;
   }
 
@@ -117,7 +116,7 @@ export default function Camera() {
       {uploadedImageUrl && (
         <Image source={{ uri: uploadedImageUrl }} style={styles.imageScan} />
       )}
-      <View>
+      <View style={{marginTop: '135%', marginLeft: '62%'}}>
         <CameraButton onPress={takeImageHandler} />
       </View>
       {fetchedData && <Text>{fetchedData}</Text>}

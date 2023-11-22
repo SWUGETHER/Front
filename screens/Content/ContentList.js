@@ -13,7 +13,6 @@ function ContentList() {
             id: 1,
             title: "생리대 착용 방법",
             date: '23.04.05',
-            likeCount: '203',
             text: "1. 개별 포장지를 뜯어 생리대를 펼쳐줍니다.\n" +
             "2. 생리대를 팬티에 붙입니다.\n" +
             "3. 속옷을 감싸듯이 날개를 반대편으로 접어주고, 두 겹으로 된 위생 팬티라면 날개를 안으로 넣어주세요.\n" +
@@ -27,7 +26,6 @@ function ContentList() {
             id: 2, 
             title: "여성 용품 종류",
             date: '23.04.04',
-            likeCount: '188',
             text: '1. 패드형 생리대- 일회용 생리대 \n'+
             '가장 많이, 일반적으로 사용하는 생리대의 종류입니다.\n'+
             '패드형 생리대 중 일회용 생리대는 접착면을 속옷에 붙여서 혈을 흡수할 수 있도록 만들어진 제품입니다.\n'+
@@ -56,7 +54,6 @@ function ContentList() {
             id: 3,
             title: "여성 용품 종류_ 체내 삽입형",
             date: '23.04.04',
-            likeCount: '200',
             text: 
             '5. 체내 삽입형 생리대 - 탐폰\n'+
             '속옷에 부착하는 형태와는 조금 다르게 질 안에 삽입하는 형식의 생리대입니다. \n'+
@@ -78,7 +75,6 @@ function ContentList() {
             id: 4,
             title: "생리대 사용시 주의 사항",
             date: '23.04.04',
-            likeCount: '195',
             text: '1. 생리대 교체는 2~3시간에 한번씩 하기!\n'+
             '양이 많은 날을 기준으로 2~3시간에 한 번씩은 생리대를 교체해주는 것이 위생상 좋습니다. \n'+
             '만약 교체하지 않고 장시간 같은 생리대를 계속 사용한다면 생리대에 흡수된 분비물이 피부와 계속 맞닿으면서 각종 질환을 유발할 수 있습니다.\n'+
@@ -100,7 +96,6 @@ function ContentList() {
             id: 5,
             title: "냉에 관한 오해와 진실",
             date: '23.04.04',
-            likeCount: '195',
             text: 'Q1.질 분비물(냉)이 많으면 질염일까?\n'+
             '폐경 전, 즉 가임기 여성은 하루 분비물은 2cc 에서 4cc정도 누구나 있는 게 정상입니다.\n'+
             '그리고 생리주기에 따라서, 상황에 따라서 이 분비물이 정상적으로도 좀 많아지는 경우가 있습니다.\n'+
@@ -151,7 +146,6 @@ function ContentList() {
             </View> 
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.date}>{item.date}</Text>
-            <Text style={styles.likeCount}>{item.likeCount}</Text>
         </TouchableOpacity>
     );
 
@@ -221,13 +215,6 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: '100%'
-    },
-    likeCount: {
-        position:'absolute', 
-        fontSize: 14, 
-        fontWeight:'bold', 
-        top: 46, 
-        right: 16
     }
 });
 

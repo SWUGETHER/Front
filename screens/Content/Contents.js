@@ -26,12 +26,9 @@ function Contents() {
             <View style={{ marginTop: 60 }}>
                 <ContentList />
             </View>
-            <View>
-                <ContentButton/>
+            <View >
+                <ContentButton style={{}}/>
             </View>
-            {/*<View>
-                <FeedButton/>
-            </View>*/}
         </View>
     );
 }

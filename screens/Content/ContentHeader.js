@@ -1,20 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import {
-  Pressable,
-  StyleSheet,
-  View,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import { StyleSheet, View, TouchableWithoutFeedback, Keyboard } from "react-native";
 import WriteCircleButton from "../../UI/WriteCircleButton";
 
-function ContentHeader({ onSave }) {
-  const navigation = useNavigation();
-  const onGoBack = () => {
-    navigation.pop();
-  };
+function ContentHeader({ navigation }) {
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -23,20 +11,11 @@ function ContentHeader({ onSave }) {
     >
       <View style={styles.contain}>
         <View style={styles.iconBtnWrap}>
-          <WriteCircleButton
-            onPress={onGoBack}
-            name="arrow-back"
-            color="#000000"
-          />
         </View>
-
         <View style={styles.btns}>
-          <WriteCircleButton
-            name="delete-forever"
-            color="#000000"
-            hasMarginRight
+          <WriteCircleButton name="delete-forever" color="#000000"
           />
-          <WriteCircleButton name="check" color="#000000" onPress={onSave} />
+          <WriteCircleButton name="check" color="#000000" />
         </View>
       </View>
     </TouchableWithoutFeedback>
