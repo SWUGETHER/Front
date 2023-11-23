@@ -101,6 +101,8 @@ export default function Navigation({ setIsSigned }) {
           <Stack.Screen name="Content" component={Content} />
           <Stack.Screen name="ContentWrite" component={ContentWrite} />
           <Stack.Screen name="CameraText" component={CameraText} />
+          <Stack.Screen name="Home" component={Home}/>
+          <Stack.Screen name="Camera" component={Camera}/>
         </Stack.Navigator>
       </NavigationContainer>
     </>

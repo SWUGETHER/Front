@@ -7,7 +7,7 @@ import {
 } from "expo-image-picker";
 import { useFocusEffect } from "@react-navigation/native";
 import { Dimensions } from "react-native";
-import CameraButton from "../UI/CameraButton";
+//import CameraButton from "../UI/CameraButton";
 import axios from "axios";
 import extractData from "../API/ocr/extractData";
 import { useNavigation } from "@react-navigation/native";
@@ -68,6 +68,7 @@ export default function Camera() {
         allowsEditing: true,
         aspect: [16, 9],
         quality: 0.5,
+        cropData: { offset: { x: 0, y: 0 }, size: { width: windowWidth, height: windowWidth } },
       });
 
       if (!image.canceled) {
@@ -107,18 +108,20 @@ export default function Camera() {
       console.log("Data fetch error:", error);
     }
   }
-
   return (
     <View style={styles.container}>
       {capturedImage && (
-        <Image source={{ uri: capturedImage }} style={styles.imageScan} />
+        <Image
+          source={{ uri: capturedImage }}
+          style={{ flex: 1, width: '100%', height: '100%', resizeMode: 'contain' }}
+        />
       )}
       {uploadedImageUrl && (
-        <Image source={{ uri: uploadedImageUrl }} style={styles.imageScan} />
+        <Image
+          source={{ uri: uploadedImageUrl }}
+          style={{ flex: 1, width: '100%', height: '100%', resizeMode: 'contain' }}
+        />
       )}
-      <View style={{marginTop: '135%', marginLeft: '62%'}}>
-        <CameraButton onPress={takeImageHandler} />
-      </View>
       {fetchedData && <Text>{fetchedData}</Text>}
     </View>
   );

@@ -3,6 +3,8 @@ import { StyleSheet, View, Text, TouchableOpacity, ImageBackground, Image } from
 import Swiper from "react-native-swiper";
 import { Dimensions } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
+//카메라
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -162,6 +164,11 @@ const Home = () => {
     function pressHandler(item) {
         navigation.navigate("Content", { item });
     }
+ 
+    function pressCameraButton(){
+        navigation.navigate("Camera");
+    }
+
 
     return (
         <View style={styles.container}>
@@ -201,6 +208,10 @@ const Home = () => {
                     </TouchableOpacity>
                 ))}
             </Swiper>
+              {/* Camera 버튼 */}
+            <TouchableOpacity style={styles.cameraButton} onPress={pressCameraButton}>
+                    <Icon name="camera" size={24} color="black" />
+            </TouchableOpacity>
         </View>
     );
 };
@@ -278,7 +289,18 @@ const styles = StyleSheet.create({
         fontWeight:'bold', 
         top: 46, 
         right: 16
-    }
+    },
+    //camera
+    cameraButton: {
+        position: 'absolute',
+        bottom: 20,
+        right: 24,
+        backgroundColor: '#979797',
+        borderRadius: 50,
+        padding: 15,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 });
 
 export default Home;
