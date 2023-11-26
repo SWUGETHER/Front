@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, TouchableOpacity, ImageBackground, Image } from
 import Swiper from "react-native-swiper";
 import { Dimensions } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
-//카메라
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const windowHeight = Dimensions.get('window').height;
@@ -158,7 +157,7 @@ const Home = () => {
 
     function pressAllHandler() {
         // navigation.navigate('Contents');
-        console.log('pressAll');
+        navigation.navigate('Contents');
     }
 
     function pressHandler(item) {
@@ -174,7 +173,7 @@ const Home = () => {
         <View style={styles.container}>
             <View style={styles.imageWrapper}>
                 <Image
-                    source={require('../assets/sample.png')}
+                    source={require('../assets/main_logo.png')}
                     style={styles.image}
                 />
             </View>
@@ -222,7 +221,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         height: windowHeight,
         width: windowWidth,
-        marginTop: 30,
+        //marginTop: 30,
     },
     imageWrapper: {
         flex: 1,
