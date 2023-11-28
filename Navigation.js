@@ -12,6 +12,7 @@ import ContentWrite from "./screens/Content/ContentWrite";
 import Camera from "./screens/Camera";
 import CameraText from "./screens/CameraText";
 import MyPage from "./screens/MyPage";
+import Result from "./screens/Result";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
@@ -54,9 +55,9 @@ function TabNavi({ setIsSigned }) {
         }}
       />
       <BottomTabs.Screen
-        name="카메라" component={Camera} options={{
+        name="추천" component={Result} options={{
           tabBarLabel: () => (
-            <Text style={{ color: "black", fontSize: 10 }}>카메라</Text>
+            <Text style={{ color: "black", fontSize: 10 }}>추천</Text>
           ),
           tabBarIcon: ({ size, focused }) => (
             <Image
@@ -103,6 +104,7 @@ export default function Navigation({ setIsSigned }) {
           <Stack.Screen name="CameraText" component={CameraText} />
           <Stack.Screen name="Home" component={Home}/>
           <Stack.Screen name="Camera" component={Camera}/>
+          <Stack.Screen name="Result" component={Result}/>
         </Stack.Navigator>
       </NavigationContainer>
     </>

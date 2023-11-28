@@ -9,22 +9,46 @@ import {
   TouchableOpacity,
 } from "react-native";
 import WriteCircleButton from "../../UI/WriteCircleButton";
+import { useNavigation } from "@react-navigation/native";
 
-function ContentHeader({ navigation }) {
+function ContentHeader({}) {
+  const navigation = useNavigation();
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [isCheckModalVisible, setCheckModalVisible] = useState(false);
+  const [isReviewModalVisible, setReviewModalVisible] = useState(false);
 
   const handleDeletePress = () => {
     setDeleteModalVisible(true);
   };
 
   const handleDeleteConfirm = () => {
-    // 여기에 삭제 동작을 추가할 수 있습니다.
-    // 예를 들어, 작성 중인 내용을 초기화하는 등의 동작을 수행할 수 있습니다.
+    setDeleteModalVisible(false);
+    navigation.goBack();
+  };
+  const handleDeleteCancel = () => {
     setDeleteModalVisible(false);
   };
 
-  const handleDeleteCancel = () => {
-    setDeleteModalVisible(false);
+  const handleCheckPress = () => {
+    setCheckModalVisible(true);
+  };
+
+  const handleCheckConfirm = () => {
+    setCheckModalVisible(false);
+    setReviewModalVisible(true);
+  };
+
+  const handleCheckCancel = () => {
+    setCheckModalVisible(false);
+  };
+
+  const handleReviewConfirm = () => {
+    setReviewModalVisible(false);
+     navigation.popToTop();
+  };
+
+  const handleReviewCancel = () => {
+    setReviewModalVisible(false);
   };
 
   return (
@@ -33,19 +57,18 @@ function ContentHeader({ navigation }) {
         Keyboard.dismiss();
       }}
     >
-      <View style={styles.contain}>
+      <View style={styles.container}>
         <View style={styles.iconBtnWrap}></View>
         <View style={styles.btns}>
-          {/* WriteCircleButton 사용 */}
           <WriteCircleButton
             name="delete-forever"
             color="#000000"
             onPress={handleDeletePress}
           />
-          <WriteCircleButton name="check" color="#000000" />
+          <WriteCircleButton name="check" color="#000000" onPress={handleCheckPress} />
         </View>
 
-        {/* 모달 */}
+        {/* 삭제 모달 */}
         <Modal
           animationType="slide"
           transparent={true}
@@ -68,13 +91,61 @@ function ContentHeader({ navigation }) {
             </View>
           </View>
         </Modal>
+
+        {/* 등록 모달 */}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isCheckModalVisible}
+          onRequestClose={() => {
+            setCheckModalVisible(false);
+          }}
+        >
+          <View style={styles.modal}>
+            <View style={styles.modalContent}>
+              <Text>글을 등록하시겠습니까?</Text>
+              <View style={styles.modalButtons}>
+                <TouchableOpacity onPress={handleCheckConfirm}>
+                  <Text style={styles.modalButton}>확인</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleCheckCancel}>
+                  <Text style={styles.modalButton}>취소</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+
+        {/* 검토 모달 */}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={isReviewModalVisible}
+          onRequestClose={() => {
+            setReviewModalVisible(false);
+          }}
+        >
+          <View style={styles.modal}>
+            <View style={styles.modalContent}>
+              <Text>검토 후 게시 될 예정입니다.</Text>
+              <View style={styles.modalButtons}>
+                <TouchableOpacity onPress={handleReviewConfirm}>
+                  <Text style={styles.modalButton}>확인</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleReviewCancel}>
+                  <Text style={styles.modalButton}>취소</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
       </View>
     </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
-  contain: {
+  container: {
     height: 48,
     paddingHorizontal: 8,
     flexDirection: "row",

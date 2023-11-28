@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Alert, View, Image, StyleSheet, Text } from "react-native";
-import {
-  launchCameraAsync,
-  useCameraPermissions,
-  PermissionStatus,
-} from "expo-image-picker";
+import { View, Image, StyleSheet, Text, Alert } from "react-native";
+import { launchCameraAsync, useCameraPermissions, PermissionStatus } from "expo-image-picker";
 import { useFocusEffect } from "@react-navigation/native";
 import { Dimensions } from "react-native";
-//import CameraButton from "../UI/CameraButton";
 import axios from "axios";
 import extractData from "../API/ocr/extractData";
 import { useNavigation } from "@react-navigation/native";
@@ -17,8 +12,7 @@ const windowWidth = Dimensions.get("window").width;
 
 export default function Camera() {
   const navigation = useNavigation();
-  const [cameraPermissionInformation, requestPermission] =
-    useCameraPermissions();
+  const [cameraPermissionInformation, requestPermission] = useCameraPermissions();
   const [capturedImage, setCapturedImage] = useState(null);
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
   const [fetchedData, setFetchedData] = useState(null);
@@ -91,23 +85,38 @@ export default function Camera() {
       });
 
       const response = await extractData(formData);
-      const uploadedImageUrl = response.data.imageUrl;
 
-      navigation.navigate("CameraText", { data: response.data });
-      setUploadedImageUrl(uploadedImageUrl);
+      if (response && response.data) {
+        const uploadedImageUrl = response.data.imageUrl;
+        setUploadedImageUrl(uploadedImageUrl);
+      } else {
+        console.log("Invalid response format or missing data:", response);
+      }
     } catch (error) {
       console.log("Image upload error:", error);
     }
   }
-
   async function fetchData() {
     try {
       const response = await axios.get("/image");
+      console.log("Fetched Data:", response.data);
       setFetchedData(response.data);
     } catch (error) {
       console.log("Data fetch error:", error);
     }
   }
+  
+
+  // 10초 후에 페이지로 자동 이동하도록
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.navigate("Result");
+    }, 10000);
+
+   
+    return () => clearTimeout(timer);
+  }, [navigation]);
+
   return (
     <View style={styles.container}>
       {capturedImage && (
@@ -134,10 +143,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: windowWidth,
     height: windowHeight,
-  },
-  imageScan: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
   },
 });
