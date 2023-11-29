@@ -68,7 +68,8 @@ export default function Camera() {
       if (!image.canceled) {
         const selectedAssetUri = image.assets[0].uri;
         setCapturedImage(selectedAssetUri);
-        uploadImage(selectedAssetUri);
+        {/**잠시 오류 처리  */}
+        //uploadImage(selectedAssetUri);
       }
     } catch (error) {
       console.log("Camera capture error:", error);
