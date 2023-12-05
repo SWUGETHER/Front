@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 const Result = () => {
@@ -33,13 +39,13 @@ const Result = () => {
   const handleResultPress = (result) => {
     // 각 결과값을 눌렀을 때의 동작 추가
     console.log(`Selected result: ${result}`);
-    // 쿠팡으로 이동하고 싶었지만 실패 
+    // 쿠팡으로 이동하고 싶었지만 실패
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.resultHeaderText}>성분 분석 추천 결과</Text>
-      {dummyData.map(item => (
+      {dummyData.map((item) => (
         <TouchableOpacity
           key={item.id}
           style={styles.resultItemContainer}
@@ -48,7 +54,6 @@ const Result = () => {
           <Text style={styles.resultItem}>{item.result}</Text>
         </TouchableOpacity>
       ))}
-
       <TouchableOpacity onPress={navigateToHome} style={styles.button}>
         <Text style={styles.buttonText}>추천 성분</Text>
       </TouchableOpacity>
@@ -59,36 +64,36 @@ const Result = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   resultHeaderText: {
     fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 100,
+    fontWeight: "bold",
+    marginBottom: 30,
   },
   resultItemContainer: {
     width: 400,
     marginBottom: 10,
     padding: 30,
-    backgroundColor: '#d9d9d9',
+    backgroundColor: "#d9d9d9",
     borderRadius: 10,
   },
   resultItem: {
     fontSize: 18,
-    color: 'black',
+    color: "black",
   },
   button: {
-    backgroundColor: '#979797',
+    backgroundColor: "#979797",
     padding: 10,
     borderRadius: 5,
-    marginTop: 100,
+    marginTop: 30,
   },
   buttonText: {
-    color: '#ffffff',
+    color: "#ffffff",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 

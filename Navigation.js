@@ -19,9 +19,11 @@ const BottomTabs = createBottomTabNavigator();
 
 function TabNavi({ setIsSigned }) {
   return (
-    <BottomTabs.Navigator screenOptions={{headerShown: false}}>
+    <BottomTabs.Navigator screenOptions={{ headerShown: false }}>
       <BottomTabs.Screen
-        name="홈" component={Home} options={{
+        name="홈"
+        component={Home}
+        options={{
           tabBarLabel: () => (
             <Text style={{ color: "black", fontSize: 10 }}>홈</Text>
           ),
@@ -38,7 +40,9 @@ function TabNavi({ setIsSigned }) {
         }}
       />
       <BottomTabs.Screen
-        name="콘텐츠" component={Contents} options={{
+        name="콘텐츠"
+        component={Contents}
+        options={{
           tabBarLabel: () => (
             <Text style={{ color: "black", fontSize: 10 }}>콘텐츠</Text>
           ),
@@ -55,7 +59,9 @@ function TabNavi({ setIsSigned }) {
         }}
       />
       <BottomTabs.Screen
-        name="추천" component={Result} options={{
+        name="추천"
+        component={Result}
+        options={{
           tabBarLabel: () => (
             <Text style={{ color: "black", fontSize: 10 }}>추천</Text>
           ),
@@ -63,8 +69,8 @@ function TabNavi({ setIsSigned }) {
             <Image
               source={
                 focused
-                  ? require("./assets/tabNavi/camera_active.png")
-                  : require("./assets/tabNavi/camera_inactive.png")
+                  ? require("./assets/tabNavi/likes_active.png")
+                  : require("./assets/tabNavi/likes_inactive.png")
               }
               style={{ width: size, height: size }}
             />
@@ -72,7 +78,9 @@ function TabNavi({ setIsSigned }) {
         }}
       />
       <BottomTabs.Screen
-        name="마이페이지" children={() => <MyPage setIsSigned={setIsSigned} />} options={{
+        name="마이페이지"
+        children={() => <MyPage setIsSigned={setIsSigned} />}
+        options={{
           tabBarLabel: () => (
             <Text style={{ color: "black", fontSize: 10 }}>마이페이지</Text>
           ),
@@ -97,14 +105,17 @@ export default function Navigation({ setIsSigned }) {
     <>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="SWUGETHER" children={() => <TabNavi setIsSigned={setIsSigned} />}/>
+          <Stack.Screen
+            name="SWUGETHER"
+            children={() => <TabNavi setIsSigned={setIsSigned} />}
+          />
           <Stack.Screen name="Contents" component={Contents} />
           <Stack.Screen name="Content" component={Content} />
           <Stack.Screen name="ContentWrite" component={ContentWrite} />
           <Stack.Screen name="CameraText" component={CameraText} />
-          <Stack.Screen name="Home" component={Home}/>
-          <Stack.Screen name="Camera" component={Camera}/>
-          <Stack.Screen name="Result" component={Result}/>
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Camera" component={Camera} />
+          <Stack.Screen name="Result" component={Result} />
         </Stack.Navigator>
       </NavigationContainer>
     </>
