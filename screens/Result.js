@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import {
-  View,
   Text,
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
+  ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-const Result = () => {
+const Result = ({ data }) => {
   const navigation = useNavigation();
-  const [dummyData, setDummyData] = useState([]);
+  const [resultData, setResultData] = useState([]);
 
   useEffect(() => {
     const generateDummyData = () => {
@@ -25,10 +25,14 @@ const Result = () => {
     };
 
     // 처음 5개의 데이터만 선택
-    const initialData = generateDummyData().slice(0, 5);
+    const dummyData = generateDummyData().slice(0, 5);
 
     // 더미 데이터 초기화_랜덤으로 넣을지 말지 고민즁!
-    setDummyData(initialData);
+    if (data) {
+      setResultData(data);
+    } else {
+      setResultData(dummyData);
+    }
   }, []);
 
   const navigateToHome = () => {
@@ -44,19 +48,24 @@ const Result = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.resultHeaderText}>성분 분석 추천 결과</Text>
-      {dummyData.map((item) => (
-        <TouchableOpacity
-          key={item.id}
-          style={styles.resultItemContainer}
-          onPress={() => handleResultPress(item.result)}
-        >
-          <Text style={styles.resultItem}>{item.result}</Text>
+      <ScrollView>
+        <Text style={styles.resultHeaderText}>성분 분석 추천 결과</Text>
+        {resultData.map((item, idx) => (
+          <TouchableOpacity
+            key={idx}
+            style={styles.resultItemContainer}
+            onPress={() => handleResultPress(item)}
+          >
+            <Text key={idx} style={styles.resultItem}>
+              {item}
+            </Text>
+          </TouchableOpacity>
+        ))}
+
+        <TouchableOpacity onPress={navigateToHome} style={styles.button}>
+          <Text style={styles.buttonText}>추천 성분</Text>
         </TouchableOpacity>
-      ))}
-      <TouchableOpacity onPress={navigateToHome} style={styles.button}>
-        <Text style={styles.buttonText}>추천 성분</Text>
-      </TouchableOpacity>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -66,7 +75,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    maxWidth: "100%",
+    //paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   resultHeaderText: {
     fontSize: 20,

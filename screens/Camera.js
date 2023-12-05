@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { View, Image, StyleSheet, Text, Alert } from "react-native";
-import { launchCameraAsync, useCameraPermissions, PermissionStatus } from "expo-image-picker";
+import {
+  launchCameraAsync,
+  useCameraPermissions,
+  PermissionStatus,
+} from "expo-image-picker";
 import { useFocusEffect } from "@react-navigation/native";
 import { Dimensions } from "react-native";
 import axios from "axios";
 import extractData from "../API/ocr/extractData";
 import { useNavigation } from "@react-navigation/native";
+import Result from "./Result";
+import Loading from "./Loading";
 
 const windowHeight = Dimensions.get("window").height;
 const windowWidth = Dimensions.get("window").width;
 
 export default function Camera() {
   const navigation = useNavigation();
-  const [cameraPermissionInformation, requestPermission] = useCameraPermissions();
-  const [capturedImage, setCapturedImage] = useState(null);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
-  const [fetchedData, setFetchedData] = useState(null);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const [cameraPermissionInformation, requestPermission] =
+    useCameraPermissions();
+  const [result, setResult] = useState(null);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -62,14 +63,17 @@ export default function Camera() {
         allowsEditing: true,
         aspect: [16, 9],
         quality: 0.5,
-        cropData: { offset: { x: 0, y: 0 }, size: { width: windowWidth, height: windowWidth } },
+        cropData: {
+          offset: { x: 0, y: 0 },
+          size: { width: windowWidth, height: windowWidth },
+        },
       });
 
       if (!image.canceled) {
         const selectedAssetUri = image.assets[0].uri;
-        setCapturedImage(selectedAssetUri);
-        {/**잠시 오류 처리  */}
-        //uploadImage(selectedAssetUri);
+        uploadImage(selectedAssetUri);
+      } else {
+        navigation.navigate("Home");
       }
     } catch (error) {
       console.log("Camera capture error:", error);
@@ -88,51 +92,32 @@ export default function Camera() {
       const response = await extractData(formData);
 
       if (response && response.data) {
-        const uploadedImageUrl = response.data.imageUrl;
-        setUploadedImageUrl(uploadedImageUrl);
+        setResult(response.data);
       } else {
         console.log("Invalid response format or missing data:", response);
+        navigation.navigate("Home");
       }
     } catch (error) {
       console.log("Image upload error:", error);
+      navigation.navigate("Home");
     }
   }
-  async function fetchData() {
-    try {
-      const response = await axios.get("/image");
-      console.log("Fetched Data:", response.data);
-      setFetchedData(response.data);
-    } catch (error) {
-      console.log("Data fetch error:", error);
-    }
-  }
-  
 
-  // 10초 후에 페이지로 자동 이동하도록
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      navigation.navigate("Result");
-    }, 10000);
+  // // 10초 후에 페이지로 자동 이동하도록
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     navigation.navigate("Result");
+  //   }, 10000);
 
-   
-    return () => clearTimeout(timer);
-  }, [navigation]);
+  //   return () => clearTimeout(timer);
+  // }, [navigation]);
 
   return (
     <View style={styles.container}>
-      {capturedImage && (
-        <Image
-          source={{ uri: capturedImage }}
-          style={{ flex: 1, width: '100%', height: '100%', resizeMode: 'contain' }}
-        />
-      )}
-      {uploadedImageUrl && (
-        <Image
-          source={{ uri: uploadedImageUrl }}
-          style={{ flex: 1, width: '100%', height: '100%', resizeMode: 'contain' }}
-        />
-      )}
-      {fetchedData && <Text>{fetchedData}</Text>}
+      {
+        // result 존재 여부에 따라 Result 페이지 / 로딩 페이지
+        result ? <Result data={result} /> : <Loading />
+      }
     </View>
   );
 }

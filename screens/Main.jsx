@@ -1,5 +1,5 @@
 import { Provider as PaperProvider } from "react-native-paper";
-import Navigation from "../Navigation";
+import Navigation from "./Navigation";
 
 export default function Main({ setIsSigned }) {
   return (
